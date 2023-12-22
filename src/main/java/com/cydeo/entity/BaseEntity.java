@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
+@EntityListeners(BaseEntityListener.class)
 public class BaseEntity {
 
     @Id
@@ -27,20 +28,20 @@ public class BaseEntity {
     @Column(nullable = false)
     private Long lastUpdateUserId;
 
-
-    @PrePersist
-    private void onPrePersist(){
-        this.insertDateTime = LocalDateTime.now();
-        this.lastUpdateDateTime=LocalDateTime.now();
-        this.insertUserId=1L;
-        this.lastUpdateUserId=1L;
-    }
-
-    @PreUpdate
-    private void onPreUpdate(){
-        this.lastUpdateDateTime=LocalDateTime.now();
-        this.lastUpdateUserId=1L;
-    }
+//bu asagidaki iki kodu farkli bir sinifa alacagiz.Cunku spring tarafindan bize verilen listener mekanizmasini kullanacagiz.Bunun icin springin bize sagladigi ozellikleri o sinifa aktarmaliyiz.Miras birakmaliyiz.Bu ozellikleri BaseEntity sinifina aktaramayiz.
+//    @PrePersist
+//    private void onPrePersist(){
+//        this.insertDateTime = LocalDateTime.now();
+//        this.lastUpdateDateTime=LocalDateTime.now();
+//        this.insertUserId=1L;
+//        this.lastUpdateUserId=1L;
+//    }
+//
+//    @PreUpdate
+//    private void onPreUpdate(){
+//        this.lastUpdateDateTime=LocalDateTime.now();
+//        this.lastUpdateUserId=1L;
+//    }
 
 
 

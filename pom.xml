@@ -33,7 +33,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+<!--        tymleaf de security icin bir kac tag e ihtiyacim var bu dependency bana bunu saglayacak-->
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+<!--        bu dependency i ekledigimiz zaman spring 3 sey veriyor bize encoded password, user, login box. Bu dependency ile kimlik dogrulama ve yetkilendirme islemini spring bizim icin olusturuyor.-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>

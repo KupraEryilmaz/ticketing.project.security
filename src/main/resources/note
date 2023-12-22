@@ -1,0 +1,32 @@
+Security Note:
+Springin bizim icin sundugu security i kullanmak icin ilk yapmamiz gereken sey pom.xml e dependency
+eklemek.(spring-boot-starter-security).Bu dependency i ekledikten sonra spring bizim yerimize security i
+sagliyor.Bize bir user, password ve login box i veriyor.Fakat biz zaten kendi uyhulamamizda bir user,
+password ve login box a sahibiz.Springin bize sunduklarini kullanmak istemiyoruz.Bunun icin ne yapacagiz?
+Springin bize sunduklarini overwrite edecegiz.
+1) Ilk olarak runner sinifina bean eklemek istiyorum.Bu bean PasswordEncoder sinifina ait olacak. Ben bu
+sinifdan obje olusturmak istiyorum.Olusturmus oldugum bu obje ile de Password Encoder sinifina ait methodu
+kullanmak istiyorum.Bu method ile kendi passwordumu encoding passworde cevirecegim.Neden buna ihtiyac
+duyuyorum? Cunku security ile calistigimda passwordumu database e encode olarak kaydetmeliyim.
+2)Kendi user imi olusturmaliyim.Iki farkli sekilde user olusturabilirim.Ilki manuel olarak olusturmam.
+Ikincisi database deki user i springin user ina cevirmem.
+****Ilkini olusturma adimlarimiz su sekilde.
+user UI a UserDetailsService interfacesindeki loadByUsername methodu ile tasiniyor.Fakat bu sinif interface
+oldugu icin bir implementation sinifina ihtiyaci var.Suan database ile calismadigimiz icin
+InMemoryUserDetailsManager implementation sinifini kullanacagiz(Objelerimizi database e degil memory e kaydedecegim).
+Bu sinifa ait olan loadByUsername methodu bize UserDetails interfacesi donduruyor.Fakat bu bir interface oldugu
+icin dondurulemez.Onun yerine UserDetails in implementationu olan Spring in User i donduruluyor.Kendi user imizi da
+olusturduk.
+**** Ikincisi ise databasede ki user imizi springin user ina donusturmek.Bunun icin UserPrincipal sinifina ihtiyacim var.
+Bu sinif bir mapper sinifi.Spring in security yapisinda kullandigi user i belirli field lara sahip.Peki biz bu field lari
+nereden alacagiz.UserDetails interfacesinden.Bu interface sinifinda bulunan methodlar ile springin bize sundugu user fieldlarina
+neler oldugunu goruyoruz.Ve onlara atama yapabiliyoruz.Bu sayede kendi user imiz springin istedigi user standartlarina
+erisebiliyor.
+
+3)Service layer ile user i UI a tasima islemi.loadByUserName() methodunu overide etmeliyim.Cunku bu method user entity i
+userprincipal mapper sinifi araciligi ile donusturerek UI a verecek.Bunun icin bu methodu override etmeliyim.Cunku biz
+springin default olarak sundugu user i kullanmak istemiyoruz.Springin default olarak verdigi tum seyleri override ediyoruz.
+SecurityService interfacesini olusturuyoruz. UserDetailsService interfacesini implement edecegim.Neden override ediyoruz.
+Override etmezsek spring entity user i springin user ina donusturerek UI a verecegini bilemez.Springin user ini UI a verir.
+
+
